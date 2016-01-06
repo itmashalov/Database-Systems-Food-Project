@@ -1,0 +1,18 @@
+﻿<div data-bind="foreach: sections">
+	<div style = 'width:20%; margin-left: auto;margin-right: auto;'class='panel panel-default '>
+		<div class='panel-heading'>
+			<h4 class='panel-title'>
+			Login
+			</h4>
+		</div>
+		<div data-bind="attr: {id: sectionname}" class="panel-collapse collapse in">
+			<form id="loginform">
+				Username:<br>
+				<input type ="text" name="username" /><br>
+				Password:<br>
+				<input type ="password" name="password" /><br>
+				<input type ="button" onclick="sendLogin()" value="login" />
+			</form>
+		</div>		
+	</div>
+</div>

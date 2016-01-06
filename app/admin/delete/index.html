@@ -1,0 +1,20 @@
+
+
+<body>
+	<div class="alert alert-danger"  data-bind="visible: ERROR_MESSAGE2() != ''" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  <span data-bind="text: ERROR_MESSAGE2 "></span>
+	</div>
+	
+	<div data-bind="html: debug"/>
+	
+	<div data-bind="foreach: sections ">
+		<form data-bind="attr: {id: relationname + '--form'}">
+			<input type ="hidden" data-bind="attr: {name: relationname + ''}" value="true">
+			<div data-bind="compose: {model: $data, view: 'views/sectionView.html'}" /></div>
+		</form>
+	</div>
+	
+	
+</body>

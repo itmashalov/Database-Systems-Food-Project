@@ -1,0 +1,96 @@
+function cleanTree(&$tree, $required, $connectors, &$errorarray)
+			{
+				foreach($required as $r)
+				{
+					foreach($tree as $name => $subtree)
+					{
+						$tname = explode(",", $name);
+						if ($r != $tname[0])
+						{
+							$this->r_cleanTree($subtree,$tname[0] ,$r, $connectors, $errorarray);
+							$tree[$name] = $subtree;
+						}
+						
+					}
+				}
+			}
+			
+			function r_cleanTree(&$tree,$selfname, $aim, $connectors, &$errorarray)
+			{		
+				$tmpstuff = Array();
+				$errors = Array();
+				foreach($tree as $name => $subtree)
+				{	
+					$tname = explode(",", $name);
+					
+					if ($tname[0] == $aim)
+						$tmpstuff[] = $tname[0];
+					else if (is_array($subtree))
+					{
+						$subrerrors = Array();
+						if ($this->r_cleanTree($subtree,$tname[0], $aim, $connectors, $subrerrors))
+						{
+							$tmpstuff[] = $tname[0];
+							$errors[] = $subrerrors;
+						}
+						$tree[$name] = $subtree;
+					}
+				}
+			
+		
+				#if more then one subree contains the same property
+				if (sizeof($tmpstuff) > 1)
+				{
+					$rightone = Array();
+					#find if the user has choosen the root
+					
+					foreach($tmpstuff as $stuff)
+					{					
+						#if the table is in the choosen ones put it to the right array
+						if (in_array($stuff, $connectors))
+							$rightone[] = $stuff;
+					}
+					
+					$i = -1;
+					#if there is only one right then delete the other subtrees
+					if (sizeof($rightone) == 1)
+					{
+						foreach($tree as $name => $subtree)
+						{	
+							$i++;
+							$tname = explode(",", $name);
+							if ($tname[0] != $rightone[0])
+							{
+								unset($tree[$name]);
+								unset($errors[$i]);
+								//$errors[$i] = Array();
+							}
+							
+						}
+						foreach($errors as $erro)
+						{
+							foreach($erro as $err)
+								$errorarray[] = $err;
+						}
+						return true;
+					}
+					$errorarray = Array();
+					$errorarray[] = "It is not clear how should " . $aim . " be connected to " . $selfname;
+					$errorarray[sizeof($errorarray)-1] .= " You may choose only one of the following connections: ";
+					foreach($tmpstuff as $error)
+						$errorarray[sizeof($errorarray)-1] .= $error . ", ";
+					
+					
+					return true;
+				}
+				
+				foreach($errors as $erro)
+				{
+					foreach($erro as $err)
+						$errorarray[] = $err;
+				}
+				
+				if (sizeof($tmpstuff) > 0)
+					return true;
+				return false;
+			}

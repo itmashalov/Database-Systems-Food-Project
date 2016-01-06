@@ -1,0 +1,14 @@
+<div data-bind="html: debug"/>
+<center>
+	<form id="ceoform">
+		<select data-bind="attr: {name: 'choosenuser' }, foreach: user_list">
+			<option selected="true" style="display:none;"></option>
+			<option data-bind="value: id, text: name" />
+		</select>
+		<input type ="button" data-bind="click: sendForm" value="Send" />	
+	</form>
+<h3> Company Profit </h3>	   
+<div id="chart" style="width: 500px; height: 400px;"></div>
+
+<center>
+

@@ -1,0 +1,36 @@
+
+	<div class="alert alert-danger"  data-bind="visible: ERROR_MESSAGE3() != ''" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  <span data-bind="text: ERROR_MESSAGE3 "></span>
+	</div>
+
+
+	<div data-bind="html: debug"/>
+	<form id="getTheseForm">
+	<div data-bind="foreach: sections">
+		<div data-bind="compose: {model: $data, view: 'views/sectionView.html'}" />
+	</div>
+	<input type ="button" onclick="sendDataForEvaluation()" value="Evaluate" />
+	</form>
+
+
+	<center>
+	<table data-bind="foreach: { data: query_results, as: 'row' }" border="10px">
+	
+		<tbody>
+		<!-- ko if: $index() == 0 -->
+		<tr data-bind="foreach: query_keys ">	
+			<td data-bind="text: $data"></td>	
+		</tr>	
+		<!-- /ko -->
+		</tbody>
+		
+		<tr data-bind="foreach: { data: query_keys, as: 'key' }">
+			<td  >
+				<span data-bind="text: row[key]">
+			</td>
+		</tr>
+		
+	</table>
+	</center>

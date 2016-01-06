@@ -1,0 +1,17 @@
+
+
+<body>
+
+	<h3>
+	<div data-bind="text: 'Our offer:' + offerr() +  '$ per kg' " ></div>
+	</h3>
+	<div data-bind="foreach: sections ">
+		<form>
+			<div data-bind="compose: {model: $data, view: 'views/sectionView.html'}" /></div>
+		</form>
+	</div>
+	
+	
+
+	
+</body>

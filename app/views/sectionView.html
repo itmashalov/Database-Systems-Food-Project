@@ -1,0 +1,87 @@
+﻿	<div style = 'width:80%; margin-left: auto;margin-right: auto;'class='panel panel-default '>
+		<div class='panel-heading'>
+			<h4 class='panel-title'>
+			<!-- ko if: FormType == "Get" -->
+			<input type=checkbox data-bind="attr: {name: relationname}" value=true />
+			<!-- /ko -->
+			<a style=" cursor:pointer" data-bind="text: sectionname, click: function() { $('#'+ sectionname).slideToggle('slow1', null); }"><a>
+			</h4>
+		</div>
+		<div data-bind="attr: {id: sectionname}" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<!-- ko if: FormType == "Get" -->
+				<table cellpadding='10' width=100% ><tr><td width = "20%"></td><td width = "15%">we know</td><td width = "50%"></td><td>we want to know</td></tr></table>
+				<!-- /ko -->
+					<table cellpadding='10' width=100% data-bind="foreach: fields">					
+						<tr >
+							<td width = "20%">
+								<span data-bind="text: title" />
+							</td>
+							<!-- ko if: FormType == "Get" -->
+							<td width = "5%">
+								<input type='checkbox' data-bind="attr: {name: name + '-known' }" value='true'>
+							</td> 
+							<!-- /ko -->
+							<td width = "50%">
+								<!-- ko if: type == "choice" -->
+								<select data-bind="attr: {name: name + '-value1[]' }, foreach: options" multiple>
+								    <option selected="true" style="display:none;"></option>
+									
+										<option data-bind="style: { color: $data.active == '0' ? 'red' : 'black' }, text: name" />
+									
+								</select>
+								<!-- /ko -->
+								<!-- ko if: type == "choicesingle" -->
+								<!--
+								<select data-bind="attr: {name: name + '-value1[]' }, options: options, optionsText: 'name', value: id, value: callback"></select>
+								-->
+								
+								<select data-bind="attr: {name: name + '-value1' }, value:callback, foreach: options">
+								    <option selected="true" style="display:none;"></option>
+									<option data-bind="style: { color: $data.active == '0' ? 'red' : 'black' }, value: id, text: name" />
+								</select>
+	
+								<!-- /ko -->
+								<!-- ko if: type == "number" -->
+								<select data-bind="attr: {name: name + '-method' }">
+									<option>Grater</option>
+									<option>Less</option>
+									<option>Between</option>
+									<option>Equal</option>
+								</select>
+								<input data-bind="attr: {name: name + '-value1' }" type ='text' />
+								<input data-bind="attr: {name: name + '-value2' }" type ='text' />
+								<!-- /ko -->
+								<!-- ko if: type == "text" -->
+								<input data-bind="attr: {name: name + '-value1' }" type ='text' />
+								<!-- /ko -->
+								<!-- ko if: type == "bool" -->
+								<input data-bind="attr: {name: name + '-value1' }" type ='checkbox' />
+								<!-- /ko -->								
+								<!-- ko if: type == "date" -->
+
+											<select data-bind="attr: {name: name + '-method' }">
+												<option>After</option>
+												<option>Before</option>
+												<option>Between</option>
+												<option>Then</option>
+											</select>
+
+								<input data-bind="attr: {name: name + '-value1' }" type ='text' />
+								<input data-bind="attr: {name: name + '-value2' }" type ='text' />
+
+								<!-- /ko -->
+							</td> 
+							<!-- ko if: FormType == "Get" -->
+							<td width = "5%">
+								<input type='checkbox' data-bind="attr: {name: name + '-wanted' }" value='true'>
+							</td> 
+							<!-- /ko -->
+						</tr>
+					</table>	
+			<!-- ko if: FormType != "Get" -->
+			<input type ="button" data-bind="click: function(){sendForm(relationname + '--form')}" value="Send" />	
+			<!-- /ko -->			
+			</div>
+		</div>		
+	</div>
